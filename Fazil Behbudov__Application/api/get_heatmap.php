@@ -40,15 +40,13 @@ try {
 
     $where = [];
     $params = [];
-    $types = '';
-
-    if ($startDate) { $where[] = 'de.date >= ?'; $params[] = $startDate; $types .= 's'; }
-    if ($endDate) { $where[] = 'de.date <= ?'; $params[] = $endDate; $types .= 's'; }
-    if ($trafficIds) { $place = implode(',', array_fill(0, count($trafficIds), '?')); $where[] = "de.idTraffic IN ($place)"; $params = array_merge($params, $trafficIds); $types .= str_repeat('i', count($trafficIds)); }
-    if ($roadTypeIds) { $place = implode(',', array_fill(0, count($roadTypeIds), '?')); $where[] = "de.idRoadType IN ($place)"; $params = array_merge($params, $roadTypeIds); $types .= str_repeat('i', count($roadTypeIds)); }
-    if ($timeOfDayIds) { $place = implode(',', array_fill(0, count($timeOfDayIds), '?')); $where[] = "de.idTimeOfDay IN ($place)"; $params = array_merge($params, $timeOfDayIds); $types .= str_repeat('i', count($timeOfDayIds)); }
-    if ($weatherIds) { $place = implode(',', array_fill(0, count($weatherIds), '?')); $where[] = "EXISTS (SELECT 1 FROM drivingExp_weather dw2 WHERE dw2.idDrivingExp = de.idDrivingExp AND dw2.idWeather IN ($place))"; $params = array_merge($params, $weatherIds); $types .= str_repeat('i', count($weatherIds)); }
-    if ($maneuverIds) { $place = implode(',', array_fill(0, count($maneuverIds), '?')); $where[] = "EXISTS (SELECT 1 FROM drivingExp_maneuver dm2 WHERE dm2.idDrivingExp = de.idDrivingExp AND dm2.idManeuver IN ($place))"; $params = array_merge($params, $maneuverIds); $types .= str_repeat('i', count($maneuverIds)); }
+    if ($startDate) { $where[] = 'de.date >= ?'; $params[] = $startDate; }
+    if ($endDate) { $where[] = 'de.date <= ?'; $params[] = $endDate; }
+    if ($trafficIds) { $place = implode(',', array_fill(0, count($trafficIds), '?')); $where[] = "de.idTraffic IN ($place)"; $params = array_merge($params, $trafficIds); }
+    if ($roadTypeIds) { $place = implode(',', array_fill(0, count($roadTypeIds), '?')); $where[] = "de.idRoadType IN ($place)"; $params = array_merge($params, $roadTypeIds); }
+    if ($timeOfDayIds) { $place = implode(',', array_fill(0, count($timeOfDayIds), '?')); $where[] = "de.idTimeOfDay IN ($place)"; $params = array_merge($params, $timeOfDayIds); }
+    if ($weatherIds) { $place = implode(',', array_fill(0, count($weatherIds), '?')); $where[] = "EXISTS (SELECT 1 FROM drivingExp_weather dw2 WHERE dw2.idDrivingExp = de.idDrivingExp AND dw2.idWeather IN ($place))"; $params = array_merge($params, $weatherIds); }
+    if ($maneuverIds) { $place = implode(',', array_fill(0, count($maneuverIds), '?')); $where[] = "EXISTS (SELECT 1 FROM drivingExp_maneuver dm2 WHERE dm2.idDrivingExp = de.idDrivingExp AND dm2.idManeuver IN ($place))"; $params = array_merge($params, $maneuverIds); }
 
     $whereClause = $where ? ('WHERE ' . implode(' AND ', $where)) : '';
 
@@ -115,18 +113,13 @@ try {
             GROUP BY labelA, labelB
             ORDER BY labelA ASC, labelB ASC";
 
-    $runQuery = function($sql, $types, $params) use ($conn) {
-        $stmt = $conn->prepare($sql);
-        if (!$stmt) throw new Exception('Prepare failed: ' . $conn->error);
-        if ($types && $params) $stmt->bind_param($types, ...$params);
-        $stmt->execute();
-        $res = $stmt->get_result();
-        $rows = $res ? $res->fetch_all(MYSQLI_ASSOC) : [];
-        $stmt->close();
-        return $rows;
+    $runQuery = function($sql, $params) use ($pdo) {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     };
 
-    $rows = $runQuery($sql, $types, $params);
+    $rows = $runQuery($sql, $params);
 
     // Build matrix structure
     $matrix = ['rows' => []];
@@ -167,6 +160,4 @@ try {
 } catch (Exception $e) {
     echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
 }
-
-$conn->close();
 ?>
