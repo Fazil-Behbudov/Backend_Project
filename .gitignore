@@ -1,0 +1,18 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Logs/temps
+*.log
+*.tmp
+
+# PHP specifics
+vendor/
+
+# Secrets and local-only config
+Fazil Behbudov__Application/api/config.php
+
+# Backups/test files
+*.bak
+*_old.php

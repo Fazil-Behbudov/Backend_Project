@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driving Experience Assistant</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #eef2f7 0%, #f7fbff 100%);
+            color: #1f2a44;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            background-color: #0f172a;
+            color: #fff;
+            padding: 22px 0;
+            margin: 0;
+            font-size: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            letter-spacing: 0.3px;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 48px 20px;
+        }
+
+        .welcome-text {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .welcome-text h2 {
+            font-size: 28px;
+            color: #0f2745;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text p {
+            font-size: 18px;
+            color: #586179;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .main-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 14px;
+            box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+            padding: 40px;
+            width: 280px;
+            text-decoration: none;
+            color: #1f2a44;
+            transition: transform 0.25s, box-shadow 0.25s;
+            cursor: pointer;
+            border: 1px solid #e4e9f2;
+        }
+
+        .main-button:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 16px 40px rgba(15, 23, 42, 0.16);
+        }
+
+        .main-button .icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+
+        .main-button h3 {
+            font-size: 22px;
+            margin: 0 0 10px 0;
+            color: #667eea;
+        }
+
+        .main-button p {
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            margin: 0;
+        }
+
+        .footer {
+            background-color: #0f172a;
+            color: #fff;
+            text-align: center;
+            padding: 16px;
+            margin-top: auto;
+            box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text h2 {
+                font-size: 24px;
+            }
+
+            .welcome-text p {
+                font-size: 16px;
+            }
+
+            .button-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .main-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+                padding: 18px 10px;
+            }
+            
+            .welcome-text h2 {
+                font-size: 20px;
+            }
+            
+            .welcome-text p {
+                font-size: 14px;
+            }
+            
+            .main-button {
+                padding: 14px 24px;
+                font-size: 16px;
+            }
+            
+            .main-container {
+                margin: 12px;
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Driving Experience Assistant</h1>
+    </header>
+    
+    <main class="main-container">
+        <section class="welcome-text">
+            <h2>Welcome to Your Driving Journey</h2>
+            <p>Track your driving experiences and improve your skills</p>
+        </section>
+
+        <nav class="button-container" aria-label="Main navigation">
+            <a href="mainform.html" class="main-button">
+                <div class="icon">✍️</div>
+                <h3>Enter New Experience</h3>
+                <p>Log your latest driving session with all details</p>
+            </a>
+
+            <a href="summary.html" class="main-button">
+                <div class="icon">📊</div>
+                <h3>View Dashboard</h3>
+                <p>See your statistics, summaries and progress</p>
+            </a>
+
+            <a href="manage.html" class="main-button">
+                <div class="icon">🛠️</div>
+                <h3>Manage Experiences</h3>
+                <p>Edit or delete logged drives on desktop</p>
+            </a>
+        </nav>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2025 Driving Experience Assistant. Track, Learn, Improve.</p>
+    </footer>
+</body>
+</html>
